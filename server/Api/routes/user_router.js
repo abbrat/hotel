@@ -67,7 +67,8 @@ router.get('/forgot',(req,res,next)=>{
 
 ////register route
 router.post('/register',(req,res,next)=>{
-    user.find({email:req.body.email}).exec()
+    user.find({email:req.body.email})
+    .exec()
     .then(use=>{
         if(use.length>=1){
             return res.status(409).json({
