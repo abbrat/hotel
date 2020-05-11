@@ -18,7 +18,7 @@ mongoose.connect('mongodb+srv://order:order@order-rngvt.mongodb.net/test?retryWr
 app.use(morgan('dev'));
 // parser 
 app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({extended:false}));
 //// cors access
 app.use((req,res,next)=>{    
     res.header("Access-Control-Allow-Origin","*");
@@ -44,7 +44,8 @@ app.use((req,res,next)=>{
 app.use((error,req,res,next)=>{
     res.status(error.status||500).json({
         error:{
-            message:error.message
+            message:error.message,
+            kk:"vfvdfbfbfb"
         }
     })
 

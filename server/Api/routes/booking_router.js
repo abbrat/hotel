@@ -2,10 +2,10 @@ const express =require('express');
 const router=express.Router();
 const booking=require('../models/booking_model');
 const mongoose=require('mongoose');
-//const checkAuth=require('../middleware/check-auth')
+const auth=require('../middleware/check-auth')
 
 /// get the orders made by a perticular user
-router.get('/mybooking/:userid',(req,res,next)=>{
+router.get('/mybooking/:userid',auth,(req,res,next)=>{
     const  user=req.params.userid;
     booking.find({user_id:user}).exec().then(result=>{
         res.status(200).json(result);
@@ -15,7 +15,7 @@ router.get('/mybooking/:userid',(req,res,next)=>{
 })
 
 // make the orders
-router.post('/',(req,res,next)=>{
+router.post('/',auth,(req,res,next)=>{
    const order=new booking({
     _id:    new mongoose.Types.ObjectId(),
     user:   req.body.username,
@@ -36,7 +36,7 @@ router.post('/',(req,res,next)=>{
 })
 
 /// cancel or delete order
-router.delete('/del_order/:orderid',(req,res,next)=>{
+router.delete('/del_order/:orderid',auth,(req,res,next)=>{
     const id=req.params.orderid;
     booking.deleteOne({_id:id}).exec().then(result=>{
         console.log(result);
